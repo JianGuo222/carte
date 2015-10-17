@@ -1,0 +1,35 @@
+<ion-view view-title="<img class='header-logo' src='img/heading-logo.png' />">
+<ion-content>
+  <div class="free-intro">
+    <div class="step icon-right">
+     <span>1.</span> Welcome, {{user.name}}!
+   </div>
+    <div ng-bind-html="free"></div>
+
+    <!--
+    <div class="step icon-right">
+      <img src="img/icon-timetable.png" class="" alt="">
+      <span>2.</span> Upload your exam timetable
+    </div>
+    <p><br><b>Note:</b> Click on the button below to take a photo or select an existing photo from your photo library.</p> -->
+    <div class="button-row">
+      <button class="button button-positive" style="width: 45%" ng-click="openPhotoLibrary(0)" ng-disabled="uploadbtn == 'Uploading'"> {{uploadbtn}}</button>
+      <span style="line-height: 46px; padding: 0 3px;">or</span>
+      <button class="button button-positive" style="width: 45%" ng-click="openPhotoLibrary(1)" ng-disabled="uploadbtn == 'Uploading'"> {{uploadbtn2}}</button>
+
+      <button ng-show="skip" class="button button-block button-balanced" ng-click="gotoNext()">Skip</button>
+    </div>
+
+    <!-- {{img}}
+    <img src="" alt="" id="myImage"> -->
+  </div>
+  <!-- <h2>{{user.name}}</h2>
+  <h2>{{user.email}}</h2>
+  <h2>{{user.location.name}}</h2>
+  <h2>{{user.birthday}}</h2>
+  <h2>{{user.gender}}</h2>
+  <h2>{{user.age_range}}</h2> -->
+
+  <!-- <img src="http://graph.facebook.com/{{user.id}}/picture?width=270&height=270"/> -->
+</ion-content>
+</ion-view>

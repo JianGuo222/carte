@@ -1,0 +1,12 @@
+{
+  "name": "carteApp",
+  "app_id": "03642b1b",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

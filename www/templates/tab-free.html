@@ -1,0 +1,56 @@
+<ion-view view-title="<img class='header-logo' src='img/heading-logo.png' />" hide-back-button="true">
+<ion-content>
+  <div class="free-intro" ng-show="showContent">
+    <div ng-bind-html="free"></div>
+    <!-- <h1 class="text-center"><img src="img/icon-heart.png" alt="">How to claim your free crepes</h1>
+    <p>
+      The Carte team will be serving delicious crepes to all students of MelbUni who are in their exam week. We hope
+      everyone will have fun on the day.
+    </p>
+    <div class="step icon-left">
+      <img src="img/icon-facebook.png" style="top: 10px;" alt="">
+      <span>1.</span> Login using your facebook account
+    </div>
+    <div class="arrow">
+      <img src="img/arrow-1.png" alt="">
+    </div>
+    <div class="step icon-right">
+      <img src="img/icon-timetable.png" style="top: 8px;" alt="">
+      <span>2.</span> Upload your exam timetable
+    </div>
+    <div class="arrow text-right">
+      <img src="img/arrow-2.png" alt="">
+    </div>
+    <div class="step icon-left">
+      <img src="img/icon-scan.png" alt="">
+      <span>3.</span> Scan our QR code at our store
+    </div>
+    <div class="arrow">
+      <img src="img/arrow-1.png" alt="">
+    </div>
+    <div class="step icon-right">
+      <img src="img/icon-crepes.png" alt="">
+      <span>4.</span> show the scan result and claim your free crepes
+    </div> -->
+    <div class="button-row">
+      <button class="button button-block button-positive" ng-click="fbLogin()">Start Now</button>
+    </div>
+  </div>
+  <div class="free-intro" ng-show="showCountdown">
+
+    <div class="list card">
+      <div class="item">
+        <div ng-bind-html="info"></div>
+
+      </div>
+
+      <div class="item item-body">
+        <h2 style="font-size: 32px; text-align:center; ">
+          {{diff}} <span>days</span>
+        </h2>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+</ion-view>

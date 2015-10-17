@@ -1,0 +1,26 @@
+<ion-view view-title="<img class='header-logo' src='img/heading-logo.png' />">
+<ion-content>
+  <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
+
+  <ion-list>
+    <ion-item collection-repeat="item in items"
+    href="#/tab/dash/{{item.id}}"
+    class="item item-thumbnail-left"
+    item-width="100%"
+    item-height="112px"
+    force-refresh-images="true">
+
+    <img ng-src="{{ item.picture }}">
+    <p>{{ item.message | limitTo:100 }}...</p>
+    <h4>{{ item.created_time | date:'MMM-dd, yyyy' }} at {{ item.created_time | date:'hh:mm a'}}</h4>
+  </ion-item>
+
+</ion-list>
+<ion-infinite-scroll on-infinite="loadMore()" ng-if="moreDataCanBeLoaded()" distance="1%" immediate-check="false">
+</ion-infinite-scroll>
+
+</ion-content>
+</ion-view>

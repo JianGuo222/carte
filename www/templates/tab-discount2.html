@@ -1,0 +1,18 @@
+<ion-view view-title="<img class='header-logo' src='img/heading-logo.png' />" hide-back-button="true">
+<ion-content>
+  <div class="free-intro">
+    <div ng-bind-html="discountC"></div>
+
+    <div class="step text-center" style="border-color: #444">
+      Current points
+      <h2 style="font-size: 32px; text-align:center; ">
+        {{count}}
+      </h2>
+    </div>
+    <div class="button-row">
+      <button class="button button-block button-dark" ng-click="scan()">Scan Now</button>
+    </div>
+
+  </div>
+</ion-content>
+</ion-view>

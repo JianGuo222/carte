@@ -1,0 +1,21 @@
+<ion-view view-title="<img class='header-logo' src='img/heading-logo.png' />">
+<ion-content>
+  <div class="free-intro">
+    <div class="step icon-right">
+      <span>1.</span> Welcome, {{user.name}}!
+    </div>
+    <div ng-bind-html="free"></div>
+    <!-- <div class="step icon-right">
+      <span>2.</span> you've uploaded your exam timetable.
+    </div>
+    <div class="step icon-right">
+      <img src="img/icon-scan.png" alt="">
+      <span>3.</span> Scan our QR code at our store
+    </div>
+    <p><br><b>Note:</b> Click on the button below to scan our barcode.</p> -->
+    <div class="button-row">
+      <button class="button button-block button-positive" ng-click="scan()"><i class="icon ion-ios-camera-outline"></i> Scan</button>
+    </div>
+  </div>
+</ion-content>
+</ion-view>

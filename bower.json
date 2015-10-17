@@ -1,0 +1,12 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "devDependencies": {
+    "angular-loading-bar": "~0.6.0",
+    "ionic": "driftyco/ionic-bower#1.1.0",
+    "ionic-platform-web-client": "~0.1.0",
+    "ionic-service-analytics": "~0.2.5",
+    "ionic-service-core": "~0.1.10",
+    "ionic-service-push": "~0.1.13"
+  }
+}
