@@ -64,30 +64,28 @@ angular.module('starter.controllers')
   });
 
   // dev only
-  // uuid = 'xxx';
-  // var promise = Discount.getCount(uuid);
-  // promise.then(function (response) {
-  //   $scope.count = response.count;
-  //   member = response;
-  // }, function(res){
-  //   var promiseN = Discount.createNewMember(uuid);
-  //   promiseN.then(function(response){
-  //     $scope.count = response.count;
-  //     member = response;
-  //   });
-  // });
-  //
-  // $scope.$on('$ionicView.enter', function(e) {
-  //   var promise = Discount.getCount(uuid);
-  //   promise.then(function (response) {
-  //     $scope.count = response.count;
-  //     member = response;
-  //   });
-  // });
+  uuid = 'xxx';
+  var promise = Discount.getCount(uuid);
+  promise.then(function (response) {
+    $scope.count = response.count;
+    member = response;
+  }, function(res){
+    var promiseN = Discount.createNewMember(uuid);
+    promiseN.then(function(response){
+      $scope.count = response.count;
+      member = response;
+    });
+  });
+
+  $scope.$on('$ionicView.enter', function(e) {
+    var promise = Discount.getCount(uuid);
+    promise.then(function (response) {
+      $scope.count = response.count;
+      member = response;
+    });
+  });
 
   // dev only end
-
-  $scope.count = 1;
 
   document.addEventListener("deviceready", function () {
     uuid = $cordovaDevice.getUUID();
