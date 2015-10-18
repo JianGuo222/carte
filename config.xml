@@ -36,7 +36,6 @@
   <gap:plugin name="org.apache.cordova.media" />
   <gap:plugin name="org.apache.cordova.splashscreen" />
   <gap:plugin name="com.phonegap.plugins.pushplugin" />
-  <gap:plugin name="com.indigoway.cordova.whitelist.whitelistplugin" />
   <gap:plugin name="com.phonegap.plugins.barcodescanner" />
   <gap:plugin name="com.ionic.keyboard" />
   <gap:plugin name="com.ionic.deploy" />
