@@ -5,13 +5,13 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','ionic.service.core', 'config', 'ionic.service.analytics', 'starter.controllers', 'starter.services', 'angular-loading-bar', 'ngOpenFB', 'ngCordova'])
+angular.module('starter', ['ionic','ionic.service.core', 'config', 'starter.controllers', 'starter.services', 'angular-loading-bar', 'ngOpenFB', 'ngCordova'])
 
-.run(function($ionicPlatform, $rootScope, ngFB, $ionicAnalytics, $ionicModal,  $ionicPopup) {
+.run(function($ionicPlatform, $rootScope, ngFB, $ionicModal,  $ionicPopup) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    $ionicAnalytics.register();
+    // $ionicAnalytics.register();
 
     ionic.Platform.fullScreen(true,false);
 
