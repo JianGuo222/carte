@@ -5,13 +5,13 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','ionic.service.core', 'config', 'starter.controllers', 'starter.services', 'angular-loading-bar', 'ngOpenFB', 'ngCordova'])
+angular.module('starter', ['ionic','ionic.service.core', 'config', 'ionic.service.analytics', 'starter.controllers', 'starter.services', 'angular-loading-bar', 'ngOpenFB', 'ngCordova'])
 
-.run(function($ionicPlatform, $rootScope, ngFB, $ionicModal,  $ionicPopup) {
+.run(function($ionicPlatform, $rootScope, ngFB, $ionicAnalytics, $ionicModal,  $ionicPopup) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    // $ionicAnalytics.register();
+    $ionicAnalytics.register();
 
     ionic.Platform.fullScreen(true,false);
 
@@ -76,32 +76,32 @@ angular.module('starter', ['ionic','ionic.service.core', 'config', 'starter.cont
     });
 
     // kick off the platform web client
-    Ionic.io();
-
-    // this will give you a fresh user or the previously saved 'current user'
-    var user = Ionic.User.current();
-
-    // if the user doesn't have an id, you'll need to give it one.
-    if (!user.id) {
-      user.id = Ionic.User.anonymousId();
-      // user.id = 'your-custom-user-id';
-      user.save();
-    }else{
-      console.log(user.id);
-    }
-
-    if(window.PushNotification){
-      var push = new Ionic.Push({});
-      push.register(function(token) {
-        // Log out your device token (Save this!)
-        push.addTokenToUser(user);
-        // user.save();
-        // alert("Got Token:  "+token.token);
-        // alert(user.id);
-        user.save();
-      });
-    }
-  });
+  //   Ionic.io();
+  //
+  //   // this will give you a fresh user or the previously saved 'current user'
+  //   var user = Ionic.User.current();
+  //
+  //   // if the user doesn't have an id, you'll need to give it one.
+  //   if (!user.id) {
+  //     user.id = Ionic.User.anonymousId();
+  //     // user.id = 'your-custom-user-id';
+  //     user.save();
+  //   }else{
+  //     console.log(user.id);
+  //   }
+  //
+  //   if(window.PushNotification){
+  //     var push = new Ionic.Push({});
+  //     push.register(function(token) {
+  //       // Log out your device token (Save this!)
+  //       push.addTokenToUser(user);
+  //       // user.save();
+  //       // alert("Got Token:  "+token.token);
+  //       // alert(user.id);
+  //       user.save();
+  //     });
+  //   }
+  // });
 
   $rootScope.mainSwitch = true;
   $rootScope.mainSwitchInfo = '';
