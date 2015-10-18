@@ -37,7 +37,13 @@
   <gap:plugin name="org.apache.cordova.splashscreen" />
   <gap:plugin name="com.phonegap.plugins.barcodescanner" />
 
+  <gap:config-file platform="ios" parent="UIStatusBarHidden">
+      <true/>
+  </gap:config-file>
 
+  <gap:config-file platform="ios" parent="UIViewControllerBasedStatusBarAppearance">
+      <false/>
+  </gap:config-file>
   <platform name="android">
     <icon src="resources\android\icon\drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="resources\android\icon\drawable-mdpi-icon.png" density="mdpi"/>
