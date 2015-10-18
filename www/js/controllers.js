@@ -87,7 +87,7 @@ angular.module('starter.controllers')
 
   // dev only end
 
-  document.addEventListener("deviceready", function () {
+  // document.addEventListener("deviceready", function () {
     uuid = $cordovaDevice.getUUID();
     var promise = Discount.getCount(uuid);
     promise.then(function (response) {
@@ -108,7 +108,7 @@ angular.module('starter.controllers')
         member = response;
       });
     });
-  }, false);
+  // }, false);
 
   $scope.scan = function() {
 
@@ -205,7 +205,7 @@ angular.module('starter.controllers')
         member = response;
       });
     });
-  });
+  }, true);
 
   $scope.scan = function() {
 
