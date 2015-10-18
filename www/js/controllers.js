@@ -47,7 +47,7 @@ angular.module('starter.controllers')
   }
 })
 
-.controller('DiscountCtrl', function($scope, $state, $cordovaDevice, $cordovaBarcodeScanner, $http, Discount, $ionicModal,  $ionicPopup) {
+.controller('DiscountCtrl', function($scope, $state, $cordovaDevice, $cordovaBarcodeScanner, $http, Discount, $ionicModal,  $ionicPopup, $ionicPlatform) {
   var uuid;
   var member;
 
@@ -108,7 +108,7 @@ angular.module('starter.controllers')
         member = response;
       });
     });
-  });
+  }, false);
 
   $scope.scan = function() {
 
