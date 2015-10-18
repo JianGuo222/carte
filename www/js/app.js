@@ -23,7 +23,7 @@ angular.module('starter', ['ionic','ionic.service.core', 'config', 'ionic.servic
 
       //StatusBar.styleDefault();
       StatusBar.overlaysWebView(true);
-      StatusBar.hide();
+      // StatusBar.hide();
       //StatusBar.backgroundColorByHexString("#000000");
 
     }
