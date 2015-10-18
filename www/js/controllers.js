@@ -108,7 +108,7 @@ angular.module('starter.controllers')
         member = response;
       });
     });
-  }, true);
+  });
 
   $scope.scan = function() {
 
@@ -205,7 +205,7 @@ angular.module('starter.controllers')
         member = response;
       });
     });
-  }, true);
+  });
 
   $scope.scan = function() {
 
