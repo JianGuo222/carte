@@ -76,32 +76,32 @@ angular.module('starter', ['ionic','ionic.service.core', 'config', 'ionic.servic
     });
 
     // kick off the platform web client
-  //   Ionic.io();
-  //
-  //   // this will give you a fresh user or the previously saved 'current user'
-  //   var user = Ionic.User.current();
-  //
-  //   // if the user doesn't have an id, you'll need to give it one.
-  //   if (!user.id) {
-  //     user.id = Ionic.User.anonymousId();
-  //     // user.id = 'your-custom-user-id';
-  //     user.save();
-  //   }else{
-  //     console.log(user.id);
-  //   }
-  //
-  //   if(window.PushNotification){
-  //     var push = new Ionic.Push({});
-  //     push.register(function(token) {
-  //       // Log out your device token (Save this!)
-  //       push.addTokenToUser(user);
-  //       // user.save();
-  //       // alert("Got Token:  "+token.token);
-  //       // alert(user.id);
-  //       user.save();
-  //     });
-  //   }
-  // });
+    Ionic.io();
+
+    // this will give you a fresh user or the previously saved 'current user'
+    var user = Ionic.User.current();
+
+    // if the user doesn't have an id, you'll need to give it one.
+    if (!user.id) {
+      user.id = Ionic.User.anonymousId();
+      // user.id = 'your-custom-user-id';
+      user.save();
+    }else{
+      console.log(user.id);
+    }
+
+    if(window.PushNotification){
+      var push = new Ionic.Push({});
+      push.register(function(token) {
+        // Log out your device token (Save this!)
+        push.addTokenToUser(user);
+        // user.save();
+        // alert("Got Token:  "+token.token);
+        // alert(user.id);
+        user.save();
+      });
+    }
+  });
 
   $rootScope.mainSwitch = true;
   $rootScope.mainSwitchInfo = '';
