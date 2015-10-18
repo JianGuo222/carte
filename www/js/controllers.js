@@ -108,7 +108,7 @@ angular.module('starter.controllers')
         member = response;
       });
     });
-  });
+  }, false);
 
   $scope.scan = function() {
 
@@ -140,7 +140,7 @@ angular.module('starter.controllers')
       }, function(error) {
         console.log("An error happened -> " + error);
       });
-    });
+    }, false);
   }
 })
 
