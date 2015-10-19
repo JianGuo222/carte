@@ -22,9 +22,9 @@ angular.module('starter', ['ionic','ionic.service.core', 'config', 'ionic.servic
       // org.apache.cordova.statusbar required
 
       StatusBar.styleDefault();
-      StatusBar.overlaysWebView(true);
-      // StatusBar.hide();
-      StatusBar.backgroundColorByHexString("#000000");
+      StatusBar.overlaysWebView(false);
+      StatusBar.hide();
+      // StatusBar.backgroundColorByHexString("#000000");
 
     }
 
