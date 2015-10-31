@@ -113,8 +113,23 @@ angular.module('starter.controllers')
   $scope.scan = function() {
 
     // dev only
-    // Discount.updateCount(member);
-    // $state.go($state.current, {}, {reload: true});
+    // if(member.count == 9){
+    //   // pop up
+    //   var alertPopup = $ionicPopup.alert({
+    //     title: 'Free Coffee',
+    //     template: 'Please DONOT close and show this popup to our staff!',
+    //     okText: 'Okay',
+    //     okType: 'button-calm'
+    //   });
+    //
+    //   alertPopup.then(function(res) {
+    //     Discount.updateCount(member);
+    //     $state.go($state.current, {}, {reload: true});
+    //   });
+    // }else{
+    //   Discount.updateCount(member);
+    //   $state.go($state.current, {}, {reload: true});
+    // }
     // dev only end
 
     document.addEventListener("deviceready", function () {
@@ -126,8 +141,23 @@ angular.module('starter.controllers')
           var promiseQr = Discount.getPage('discount-qr');
           promiseQr.then(function(response){
             if(imageData.text == response[0].content){
-              Discount.updateCount(member);
-              $state.go($state.current, {}, {reload: true});
+              if(member.count == 9){
+                // pop up
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Free Coffee',
+                  template: 'Please DONOT close and show this popup to our staff!',
+                  okText: 'Okay',
+                  okType: 'button-calm'
+                });
+
+                alertPopup.then(function(res) {
+                  Discount.updateCount(member);
+                  $state.go($state.current, {}, {reload: true});
+                });
+              }else{
+                Discount.updateCount(member);
+                $state.go($state.current, {}, {reload: true});
+              }
             }else{
               alert('Please try again!');
             }
@@ -223,8 +253,23 @@ angular.module('starter.controllers')
           var promiseQr = Discount.getPage('discount-qr2');
           promiseQr.then(function(response){
             if(imageData.text == response[0].content){
-              Discount.updateCount2(member);
-              $state.go($state.current, {}, {reload: true});
+              if(member.count2 == 9){
+                // pop up
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Free Crepe',
+                  template: 'Please DONOT close and show this popup to our staff!',
+                  okText: 'Okay',
+                  okType: 'button-calm'
+                });
+
+                alertPopup.then(function(res) {
+                  Discount.updateCount2(member);
+                  $state.go($state.current, {}, {reload: true});
+                });
+              }else{
+                Discount.updateCount2(member);
+                $state.go($state.current, {}, {reload: true});
+              }
             }else{
               alert('Please try again!');
             }
@@ -350,10 +395,7 @@ angular.module('starter.controllers')
         // check if user is in blacklist
         var promiseB = Free.getUserById($scope.user.id);
         promiseB.then(function(response){
-          if(response[0] && typeof response[0].images != 'undefined' && response[0].images != ''){
-            // already have image uploaded
-            $scope.skip = true;
-          }
+
           if(response[0] && response[0].blacklist == 'yes'){
             // the user is in blacklist, prevent him from continuing
             var alertPopup = $ionicPopup.alert({
@@ -368,6 +410,7 @@ angular.module('starter.controllers')
             });
           }else{
             // user is not in blacklist
+
 
             // check if user has already attended this event
             if(response[0] && response[0].counter == '1'){
@@ -386,6 +429,12 @@ angular.module('starter.controllers')
 
               // check if user has entered student.unimelb.edu.au email
               if(response[0] && response[0].unimelb){
+                if(response[0] && typeof response[0].images != 'undefined' && response[0].images != ''){
+                  // already have image uploaded
+                  $scope.skip = true;
+                  $state.go('tab.free-scan');
+                }
+
                 var promise = Free.getPage('step2');
                 promise.then(function(response){
                   $scope.free = response[0].content;
@@ -416,218 +465,8 @@ angular.module('starter.controllers')
                     }
                   });
                 });
-
-                // 1. make user like the page
-                var alertPopup = $ionicPopup.alert({
-                  title: 'Like us on facebook to continue',
-                  template: '<div style="text-align: center"><iframe width="49" height="20" scroll="no" src="https://www.facebook.com/v2.4/plugins/like.php?action=like&app_id=176740972660104&channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2F44OwK74u0Ie.js%3Fversion%3D41%23cb%3Df209f4f774%26domain%3Dlocalhost%26origin%3Dhttp%253A%252F%252Flocalhost%253A8100%252Ff70f43d4%26relation%3Dparent.parent&container_width=230&href=https%3A%2F%2Fwww.facebook.com%2Fcartecrepes&layout=button&locale=en_US&sdk=joey&share=false&show_faces=false"></iframe></div>',
-                  okText: 'Okay',
-                  okType: 'button-calm'
-                });
-
-                // $timeout(function(){
-                //   FB.XFBML.parse();
-                // }, 0);
-
-                alertPopup.then(function(res) {
-                  // 2. check user permission
-                  ngFB.api({
-                    path: '/'+$scope.user.id+'/permissions'
-                  }).then(
-                    function (res) {
-                      // console.log(res);
-                      res = res.data;
-                      if(res.length)
-                      {
-                        var isGranted = false;
-                        for(var i=0; i<res.length; i++){
-                          if(res[i].permission && res[i].permission == 'user_likes'){
-                            if(res[i].status=='granted'){
-                              // user has granted user_likes permission
-                              isGranted = true;
-                              break;
-                            }
-                          }
-                        }
-
-                        if(isGranted){
-                          // 3. check if the user liked the page
-                          ngFB.api({
-                            path: '/'+$scope.user.id+'/likes'
-                          }).then(
-                            function (res) {
-                              // console.log(res);
-                              var hasLiked = false;
-                              res = res.data;
-                              for(var i=0; i<res.length; i++){
-                                if(res[i].name && res[i].name.indexOf('Carte')>=0){
-                                  hasLiked = true;
-                                  break;
-                                }
-                              }
-                              if(!hasLiked){
-                                // re-asking user to like the page
-                                var alertPopup2 = $ionicPopup.alert({
-                                  title: 'Please like us by clicking the Like below to continue',
-                                  template: '<div style="text-align: center"><iframe width="49" height="20" scroll="no" src="https://www.facebook.com/v2.4/plugins/like.php?action=like&app_id=176740972660104&channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2F44OwK74u0Ie.js%3Fversion%3D41%23cb%3Df209f4f774%26domain%3Dlocalhost%26origin%3Dhttp%253A%252F%252Flocalhost%253A8100%252Ff70f43d4%26relation%3Dparent.parent&container_width=230&href=https%3A%2F%2Fwww.facebook.com%2Fcartecrepes&layout=button&locale=en_US&sdk=joey&share=false&show_faces=false"></iframe></div>',
-                                  okText: 'Okay',
-                                  okType: 'button-calm'
-                                });
-
-                                // $timeout(function(){
-                                //   FB.XFBML.parse();
-                                // }, 0);
-
-                                alertPopup2.then(function(res){
-                                  // 4. re check if user liked the page
-                                  ngFB.api({
-                                    path: '/'+$scope.user.id+'/likes'
-                                  }).then(
-                                    function (res) {
-                                      // console.log(res);
-                                      var hasLiked = false;
-                                      res = res.data;
-                                      for(var i=0; i<res.length; i++){
-                                        if(res[i].name && res[i].name.indexOf('Carte')>=0){
-                                          hasLiked = true;
-                                          break;
-                                        }
-                                      }
-                                      if(!hasLiked){
-                                        // re-asking user to like the page
-                                        var alertPopup3 = $ionicPopup.alert({
-                                          title: 'Please like us by clicking the Like below to continue',
-                                          template: '<div style="text-align: center"><iframe width="49" height="20" scroll="no" src="https://www.facebook.com/v2.4/plugins/like.php?action=like&app_id=176740972660104&channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2F44OwK74u0Ie.js%3Fversion%3D41%23cb%3Df209f4f774%26domain%3Dlocalhost%26origin%3Dhttp%253A%252F%252Flocalhost%253A8100%252Ff70f43d4%26relation%3Dparent.parent&container_width=230&href=https%3A%2F%2Fwww.facebook.com%2Fcartecrepes&layout=button&locale=en_US&sdk=joey&share=false&show_faces=false"></iframe></div>',
-                                          okText: 'Okay',
-                                          okType: 'button-calm'
-                                        });
-                                        alertPopup3.then(function(res){
-                                          ngFB.api({
-                                            path: '/'+$scope.user.id+'/likes'
-                                          }).then(
-                                            function (res) {
-                                              // console.log(res);
-                                              var hasLiked = false;
-                                              res = res.data;
-                                              for(var i=0; i<res.length; i++){
-                                                if(res[i].name && res[i].name.indexOf('Carte')>=0){
-                                                  hasLiked = true;
-                                                  break;
-                                                }
-                                              }
-                                              if(!hasLiked){
-                                                user.liked = 'no';
-                                                Free.saveUserToDB(user);
-                                              }else{
-                                                // all good
-                                                user.liked = 'yes';
-                                                Free.saveUserToDB(user);
-                                              }
-                                            }
-                                          );
-
-                                        });
-
-                                        // $timeout(function(){
-                                        //   FB.XFBML.parse();
-                                        // }, 0);
-
-                                      }else{
-                                        // all good
-                                        user.liked = 'yes';
-                                        Free.saveUserToDB(user);
-                                      }
-                                    }
-                                  );
-                                });
-                              }else{
-                                // all good
-                                // save some data to db
-                                user.liked = 'yes';
-                                Free.saveUserToDB(user);
-                              }
-                            }
-                          );
-                        }else{
-                          // user_likes permission not granted, can't check use likes
-                          console.log('no user_likes permission granted');
-
-                          // save some data to db
-                          user.liked = 'n/a';
-                          Free.saveUserToDB(user);
-                        }
-                      }
-                    }
-                  );
-
-                });
-              }else{
-                // ask user for unimelb email
-                var myPopup = $ionicPopup.show({
-                  template: '<input type="email" id="unimelb" style="width: 60px; display: inline-block;"> @student.unimelb.edu.au',
-                  title: 'Enter your email',
-                  subTitle: 'Please use your student email name',
-                  scope: $scope,
-                  buttons: [
-                    {
-                      text: '<b>Save</b>',
-                      type: 'button-positive',
-                      onTap: function(e) {
-                        if (document.getElementById('unimelb').value == '') {
-                          //don't allow the user to close unless he enters wifi password
-                          e.preventDefault();
-                        } else {
-                          return document.getElementById('unimelb').value;
-                        }
-                      }
-                    }
-                  ]
-                });
-                myPopup.then(function(res) {
-                  // console.log('Tapped!', res);
-                  // $state.go($state.current, {}, {reload: true});
-                  user.unimelb = res+'@student.unimelb.edu.au';
-
-                  // send activation email to this email address
-                  var eo = {};
-                  eo.email = res+'@student.unimelb.edu.au';
-                  // eo.email = 'chalmers.chester@gmail.com';
-                  eo.id = user.id;
-                  Free.sendEmail(eo);
-
-                  alert('An activiation email has been sent to '+res+'@student.unimelb.edu.au');
-
-                  var promise = Free.getPage('step2');
-                  promise.then(function(response){
-                    $scope.free = response[0].content;
-                  });
-
-                  $scope.$on('$ionicView.enter', function(e) {
-                    var promise = Free.getPage('step2');
-                    promise.then(function(response){
-                      $scope.free = response[0].content;
-                    });
-                    var promiseB2 = Free.getUserById($scope.user.id);
-                    promiseB2.then(function(response){
-                      if(response[0] && typeof response[0].images != 'undefined' && response[0].images != ''){
-                        // already have image uploaded
-                        $scope.skip = true;
-                      }
-                      if(response[0] && response[0].counter == '1'){
-                        var alertPopup = $ionicPopup.alert({
-                          title: 'Oops!',
-                          template: 'You\'ve already claimed your free crepes for this event. Please follow us for our next free event.',
-                          okText: 'Okay',
-                          okType: 'button-assertive'
-                        });
-
-                        alertPopup.then(function(res) {
-                          $state.go('tab.free');
-                        });
-                      }
-                    });
-                  });
-
+                Free.saveUserToDB(user);
+                if(false){
                   // 1. make user like the page
                   var alertPopup = $ionicPopup.alert({
                     title: 'Like us on facebook to continue',
@@ -772,6 +611,221 @@ angular.module('starter.controllers')
                     );
 
                   });
+                }
+              }else{
+                // ask user for unimelb email
+                var myPopup = $ionicPopup.show({
+                  template: '<input type="email" id="unimelb" style="width: 60px; display: inline-block;"> @student.unimelb.edu.au',
+                  title: 'Enter your email',
+                  subTitle: 'Please use your student email name',
+                  scope: $scope,
+                  buttons: [
+                    {
+                      text: '<b>Save</b>',
+                      type: 'button-positive',
+                      onTap: function(e) {
+                        if (document.getElementById('unimelb').value == '') {
+                          //don't allow the user to close unless he enters wifi password
+                          e.preventDefault();
+                        } else {
+                          return document.getElementById('unimelb').value;
+                        }
+                      }
+                    }
+                  ]
+                });
+                myPopup.then(function(res) {
+                  // console.log('Tapped!', res);
+                  // $state.go($state.current, {}, {reload: true});
+                  user.unimelb = res+'@student.unimelb.edu.au';
+
+                  // send activation email to this email address
+                  var eo = {};
+                  eo.email = res+'@student.unimelb.edu.au';
+                  // eo.email = 'chalmers.chester@gmail.com';
+                  eo.id = user.id;
+                  Free.sendEmail(eo);
+
+                  alert('An activiation email has been sent to '+res+'@student.unimelb.edu.au');
+
+                  var promise = Free.getPage('step2');
+                  promise.then(function(response){
+                    $scope.free = response[0].content;
+                  });
+
+                  $scope.$on('$ionicView.enter', function(e) {
+                    var promise = Free.getPage('step2');
+                    promise.then(function(response){
+                      $scope.free = response[0].content;
+                    });
+                    var promiseB2 = Free.getUserById($scope.user.id);
+                    promiseB2.then(function(response){
+                      if(response[0] && typeof response[0].images != 'undefined' && response[0].images != ''){
+                        // already have image uploaded
+                        $scope.skip = true;
+                      }
+                      if(response[0] && response[0].counter == '1'){
+                        var alertPopup = $ionicPopup.alert({
+                          title: 'Oops!',
+                          template: 'You\'ve already claimed your free crepes for this event. Please follow us for our next free event.',
+                          okText: 'Okay',
+                          okType: 'button-assertive'
+                        });
+
+                        alertPopup.then(function(res) {
+                          $state.go('tab.free');
+                        });
+                      }
+                    });
+                  });
+
+                  Free.saveUserToDB(user);
+                  if(false){
+                    // 1. make user like the page
+                    var alertPopup = $ionicPopup.alert({
+                      title: 'Like us on facebook to continue',
+                      template: '<div style="text-align: center"><iframe width="49" height="20" scroll="no" src="https://www.facebook.com/v2.4/plugins/like.php?action=like&app_id=176740972660104&channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2F44OwK74u0Ie.js%3Fversion%3D41%23cb%3Df209f4f774%26domain%3Dlocalhost%26origin%3Dhttp%253A%252F%252Flocalhost%253A8100%252Ff70f43d4%26relation%3Dparent.parent&container_width=230&href=https%3A%2F%2Fwww.facebook.com%2Fcartecrepes&layout=button&locale=en_US&sdk=joey&share=false&show_faces=false"></iframe></div>',
+                      okText: 'Okay',
+                      okType: 'button-calm'
+                    });
+
+                    // $timeout(function(){
+                    //   FB.XFBML.parse();
+                    // }, 0);
+
+                    alertPopup.then(function(res) {
+                      // 2. check user permission
+                      ngFB.api({
+                        path: '/'+$scope.user.id+'/permissions'
+                      }).then(
+                        function (res) {
+                          // console.log(res);
+                          res = res.data;
+                          if(res.length)
+                          {
+                            var isGranted = false;
+                            for(var i=0; i<res.length; i++){
+                              if(res[i].permission && res[i].permission == 'user_likes'){
+                                if(res[i].status=='granted'){
+                                  // user has granted user_likes permission
+                                  isGranted = true;
+                                  break;
+                                }
+                              }
+                            }
+
+                            if(isGranted){
+                              // 3. check if the user liked the page
+                              ngFB.api({
+                                path: '/'+$scope.user.id+'/likes'
+                              }).then(
+                                function (res) {
+                                  // console.log(res);
+                                  var hasLiked = false;
+                                  res = res.data;
+                                  for(var i=0; i<res.length; i++){
+                                    if(res[i].name && res[i].name.indexOf('Carte')>=0){
+                                      hasLiked = true;
+                                      break;
+                                    }
+                                  }
+                                  if(!hasLiked){
+                                    // re-asking user to like the page
+                                    var alertPopup2 = $ionicPopup.alert({
+                                      title: 'Please like us by clicking the Like below to continue',
+                                      template: '<div style="text-align: center"><iframe width="49" height="20" scroll="no" src="https://www.facebook.com/v2.4/plugins/like.php?action=like&app_id=176740972660104&channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2F44OwK74u0Ie.js%3Fversion%3D41%23cb%3Df209f4f774%26domain%3Dlocalhost%26origin%3Dhttp%253A%252F%252Flocalhost%253A8100%252Ff70f43d4%26relation%3Dparent.parent&container_width=230&href=https%3A%2F%2Fwww.facebook.com%2Fcartecrepes&layout=button&locale=en_US&sdk=joey&share=false&show_faces=false"></iframe></div>',
+                                      okText: 'Okay',
+                                      okType: 'button-calm'
+                                    });
+
+                                    // $timeout(function(){
+                                    //   FB.XFBML.parse();
+                                    // }, 0);
+
+                                    alertPopup2.then(function(res){
+                                      // 4. re check if user liked the page
+                                      ngFB.api({
+                                        path: '/'+$scope.user.id+'/likes'
+                                      }).then(
+                                        function (res) {
+                                          // console.log(res);
+                                          var hasLiked = false;
+                                          res = res.data;
+                                          for(var i=0; i<res.length; i++){
+                                            if(res[i].name && res[i].name.indexOf('Carte')>=0){
+                                              hasLiked = true;
+                                              break;
+                                            }
+                                          }
+                                          if(!hasLiked){
+                                            // re-asking user to like the page
+                                            var alertPopup3 = $ionicPopup.alert({
+                                              title: 'Please like us by clicking the Like below to continue',
+                                              template: '<div style="text-align: center"><iframe width="49" height="20" scroll="no" src="https://www.facebook.com/v2.4/plugins/like.php?action=like&app_id=176740972660104&channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2F44OwK74u0Ie.js%3Fversion%3D41%23cb%3Df209f4f774%26domain%3Dlocalhost%26origin%3Dhttp%253A%252F%252Flocalhost%253A8100%252Ff70f43d4%26relation%3Dparent.parent&container_width=230&href=https%3A%2F%2Fwww.facebook.com%2Fcartecrepes&layout=button&locale=en_US&sdk=joey&share=false&show_faces=false"></iframe></div>',
+                                              okText: 'Okay',
+                                              okType: 'button-calm'
+                                            });
+                                            alertPopup3.then(function(res){
+                                              ngFB.api({
+                                                path: '/'+$scope.user.id+'/likes'
+                                              }).then(
+                                                function (res) {
+                                                  // console.log(res);
+                                                  var hasLiked = false;
+                                                  res = res.data;
+                                                  for(var i=0; i<res.length; i++){
+                                                    if(res[i].name && res[i].name.indexOf('Carte')>=0){
+                                                      hasLiked = true;
+                                                      break;
+                                                    }
+                                                  }
+                                                  if(!hasLiked){
+                                                    user.liked = 'no';
+                                                    Free.saveUserToDB(user);
+                                                  }else{
+                                                    // all good
+                                                    user.liked = 'yes';
+                                                    Free.saveUserToDB(user);
+                                                  }
+                                                }
+                                              );
+
+                                            });
+
+                                            // $timeout(function(){
+                                            //   FB.XFBML.parse();
+                                            // }, 0);
+
+                                          }else{
+                                            // all good
+                                            user.liked = 'yes';
+                                            Free.saveUserToDB(user);
+                                          }
+                                        }
+                                      );
+                                    });
+                                  }else{
+                                    // all good
+                                    // save some data to db
+                                    user.liked = 'yes';
+                                    Free.saveUserToDB(user);
+                                  }
+                                }
+                              );
+                            }else{
+                              // user_likes permission not granted, can't check use likes
+                              console.log('no user_likes permission granted');
+
+                              // save some data to db
+                              user.liked = 'n/a';
+                              Free.saveUserToDB(user);
+                            }
+                          }
+                        }
+                      );
+
+                    });
+                  }
                 });
               }
             }

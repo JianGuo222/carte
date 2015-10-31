@@ -158,7 +158,7 @@ angular.module('starter.services', ['config'])
 
     updateCount: function(member){
       var deferred = $q.defer();
-      if(member.count == '8'){
+      if(member.count == '9'){
         member.count = '0';
       }else if(member.count==''){
         member.count = 1;
@@ -176,7 +176,7 @@ angular.module('starter.services', ['config'])
 
     updateCount2: function(member){
       var deferred = $q.defer();
-      if(member.count2 == '8'){
+      if(member.count2 == '9'){
         member.count2 = '0';
       }else if(member.count2==''){
         member.count2 = 1;
